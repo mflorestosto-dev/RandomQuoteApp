@@ -66,10 +66,8 @@ dependencies {
 
     // --- Lifecycle & ViewModel (Necesario para LiveData y ViewModel) ---
     // CAMBIO 4: Versiones actualizadas y sin duplicados.
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.2")
-    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
 
     // --- Compose ---
     implementation(platform(libs.androidx.compose.bom))
@@ -96,5 +94,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // CAMBIO 6: La dependencia de Firebase App Distribution fue movida a la sección de plugins.
-     implementation(libs.firebase.appdistribution.gradle) // <-- Se eliminó de aquí
 }

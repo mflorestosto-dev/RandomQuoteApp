@@ -1,5 +1,6 @@
 package com.example.learningcleanarquitecture.ui.screens.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,8 +14,12 @@ import kotlinx.coroutines.launch
 
 class PostViewModel: ViewModel() {
 
-    val post = MutableLiveData<PostModel>()
-    val isLoading = MutableLiveData<Boolean>()
+    private val _post = MutableLiveData<PostModel?>()
+    val post: LiveData<PostModel?> = _post
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
 
     var getPostDetailUseCase = GetPostsUseCase()
     var getRandomPostDetailUseCase = GetRandomPostUseCase()
@@ -22,17 +27,17 @@ class PostViewModel: ViewModel() {
 
     fun onCreate() {
         viewModelScope.launch {
-            isLoading.postValue(true)
+            _isLoading.value = true
             try {
                 val result: List<PostModel> ?= getPostDetailUseCase()
                 if (!result.isNullOrEmpty()) {
-                    post.postValue(result[0])
+                    _post.value = result[0]
                 }
             } catch (e: Exception) {
                 // Opcional: Manejar el error, por ejemplo, posteando un mensaje de error a otro LiveData
                 // Log.e("PostViewModel", "Error fetching posts", e)
             } finally {
-                isLoading.postValue(false)
+                _isLoading.value = false
             }
         }
     }
@@ -40,17 +45,17 @@ class PostViewModel: ViewModel() {
 
     fun randomPost() {
         viewModelScope.launch {
-            isLoading.postValue(true)
+            _isLoading.value = true
             try {
                 val result: PostModel? = getRandomPostDetailUseCase()
                 if (result != null) {
-                    post.postValue(result)
+                    _post.value = result
                 }
             } catch (e: Exception) {
                 // Opcional: Manejar el error, por ejemplo, posteando un mensaje de error a otro LiveData
                 // Log.e("PostViewModel", "Error fetching random post", e)
             } finally {
-                isLoading.postValue(false)
+                _isLoading.value = false
             }
         }
     }

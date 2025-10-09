@@ -17,8 +17,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LearningCleanArquitectureTheme {
-                Surface(Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     PostScreen()
                 }
