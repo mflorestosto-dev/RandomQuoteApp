@@ -1,11 +1,10 @@
 package com.example.learningcleanarquitecture.domain
 
-import com.example.learningcleanarquitecture.data.PostRepository
 import com.example.learningcleanarquitecture.data.model.PostModel
 import com.example.learningcleanarquitecture.data.model.PostProvider
+import javax.inject.Inject
 
-class GetRandomPostUseCase {
-    private val repository = PostRepository()
+class GetRandomPostUseCase @Inject constructor() {
 
     operator fun invoke(): PostModel? {
         val posts: List<PostModel> = PostProvider.posts

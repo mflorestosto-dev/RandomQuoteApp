@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    kotlin("kapt")
     // CAMBIO: El plugin de Firebase App Distribution se declara aquí, no en las dependencias.
 }
 
@@ -93,5 +95,16 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // CAMBIO 6: La dependencia de Firebase App Distribution fue movida a la sección de plugins.
-}
+        // CAMBIO 6: La dependencia de Firebase App Distribution fue movida a la sección de plugins.
+
+    
+
+        // --- Hilt ---
+
+        implementation(libs.hilt.android)
+
+        kapt(libs.hilt.compiler)
+
+    }
+
+    

@@ -7,12 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.learningcleanarquitecture.domain.GetPostsUseCase
 import com.example.learningcleanarquitecture.data.model.PostModel
 import com.example.learningcleanarquitecture.domain.GetRandomPostUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PostViewModel: ViewModel() {
+@HiltViewModel
+class PostViewModel @Inject constructor(
+    private val getPostDetailUseCase: GetPostsUseCase,
+    private val getRandomPostDetailUseCase: GetRandomPostUseCase
+) : ViewModel() {
 
     private val _post = MutableLiveData<PostModel?>()
     val post: LiveData<PostModel?> = _post
@@ -20,16 +23,11 @@ class PostViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-
-    var getPostDetailUseCase = GetPostsUseCase()
-    var getRandomPostDetailUseCase = GetRandomPostUseCase()
-
-
     fun onCreate() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val result: List<PostModel> ?= getPostDetailUseCase()
+                val result: List<PostModel>? = getPostDetailUseCase()
                 if (!result.isNullOrEmpty()) {
                     _post.value = result[0]
                 }
@@ -41,7 +39,6 @@ class PostViewModel: ViewModel() {
             }
         }
     }
-
 
     fun randomPost() {
         viewModelScope.launch {
