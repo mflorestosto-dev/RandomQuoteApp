@@ -10,6 +10,6 @@ class PostRepository @Inject constructor(private val api: PostService) {
     suspend fun getAllPosts(): List<PostModel> {
         val response: List<PostModel> = api.getPosts()
         PostProvider.posts = response
-        return response
+        return response.ifEmpty { emptyList() }
     }
 }
